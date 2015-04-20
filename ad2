@@ -1,0 +1,47 @@
+'''
+Task #2
+Prepare pseudocode finding all bridges in an undirected graph G = (V, E), where V is a set of
+vertices and E is a set of edges. An edge is a bridge if and only if it is not contained in any
+cycle. Assume the graph is described by adjacency list.
+Def. 1.​A bridge is an edge whose deletion increases the number of connected components.
+Equivalently, an edge is a bridge if and only if it is not contained in any cycle. A graph is said
+to be bridgeless if it contains no bridges.
+Def. 2.​A connected component of an undirected graph is a subgraph in which any two
+vertices are connected to each other by paths, and which is connected to no additional
+vertices in the supergraph.
+'''
+
+G = (V, E) : Verticles, Edges
+
+
+Variables:
+n - liczba wierzchołków w grafie
+g - graf
+ccn = liczba spójnych składowych
+L - lista mostów
+v,u - numery wierzchołków
+VU - lista krawędzi
+Edge(v,u) - krawędź
+
+function find_coherent_components(n, g, VU) # funkcja znajduje liczbę spójnych składowych dla zadanego grafu
+
+list L = []
+loop i from 0 to n - 1:
+	VU[i] = True #krawedzie w grafie odznaczamy jako true
+
+ccn = find_coherent_components(n, g, VU)
+
+loop v from 0 to n-1:
+   p = Neighbors[v] #Lista sąsiedów
+   loop while p exists: #dopóki wierzchołek ma sąsiadów
+   		u = p[v] #numer wierzhołka sąsiadującego
+   		statement if u > v: #patrzymy tylko w 1 stronę
+			VU[v] = VU[u] = False # zaznaczamy daną krawędź jako usuniętą
+			statement if find_coherent_components(n, g, VU) > ccn: #jeżeli po usunięciu zwiększy się liczba spójnych składowych to znaczy, że to był most
+				add to L Edge(v,u) # znaleziony most
+			VU[v]=VU[u]=True #odznaczamy krawedzie
+		p = p.next #następny wierzchołek
+
+
+
+
